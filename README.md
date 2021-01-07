@@ -7,7 +7,8 @@ The monitor records half-hourly values in this format:
 
 Spacing is consistent. Conductivity comes after date/time, then pH.  One CSV per day.
 
-This takes conductivity or pH (one script each), averages the hourly values from each CSV, then adds to a new CSV with collated data.
-For pH, both an arithmetic mean and a mean converted via [H+] are calculated.
+Script iterates directory containing source CSVs. Then takes conductivity or pH (one script for each), averages the half-hourly values from each CSV, then adds to a new CSV with collated data. For pH, both an arithmetic mean and a mean converted via [H+] are calculated.  Finally writes the daily averages to a new CSV.
 
-Iterates directory containing source CSVs.  Writes to defined new CSV.
+To-do:
+Blank lines in the source CSVs cause a crash which can be fixed by manual deletion.  Could fix this?
+Could combine pH and conductivity into one script
