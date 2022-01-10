@@ -7,9 +7,6 @@ from the same csv data files
 
 the desired data is always in characters 32-37, starting on line 4
 
-script fails if there are blank lines in a data csv
-lacking an elegant solution, simply delete the blank lines then re-run
-
 useful ideas for coding:
     opening, reading and writing from files
     using glob to return files in a path
@@ -17,12 +14,13 @@ useful ideas for coding:
 sam karpiniec
 
 05oct2020 v0.1 first version adapted from conductivity program
+10jan2022 v0.2 added line-length check before slicing data i.e. length of 1 is blankline
 '''
 
 import glob
 import math
 
-list=open('C:/tmp/pH_2020_q4.csv','a+')
+list=open('C:/tmp/pH_2021_q4.csv','a+')
 list.write('filename,pH-avg,pH-conv-avg\n')
 
 for datafilez in sorted(glob.iglob('c:/tmp/test/*.CSV')):
@@ -35,12 +33,13 @@ for datafilez in sorted(glob.iglob('c:/tmp/test/*.CSV')):
     Hvalues=[]
 
     for x in range(3,len(lines)):
-        z=float(lines[x][31:37])
-        values.append(z)
-        Hvalues.append(10**((-1)*z))
+       if len(lines[x])!=1: 
+            z=float(lines[x][31:37])
+            values.append(z)
+            Hvalues.append(10**((-1)*z))
 
-    print(values)
-    print(Hvalues)
+    #print(values)
+    #print(Hvalues)
     avg=sum(values)/len(values)
     Havg=math.log((sum(Hvalues)/len(Hvalues)),10)*(-1)
 
